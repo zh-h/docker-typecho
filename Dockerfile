@@ -12,17 +12,16 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 
 # install extensions and typecho
 RUN apt-get update && \
-    apt-get install libcurl4-openssl-dev && \
-    docker-php-ext-install pdo_mysql
+    apt-get install libcurl4-openssl-dev sqlite3 libsqlite3-dev && \
+    docker-php-ext-install pdo_mysql pdo_sqlite
 
-ADD https://github.com/typecho/typecho/releases/download/v1.0-14.10.10-release/1.0.14.10.10.-release.tar.gz typecho.tar.gz
+ADD . /var/www/html
 
-ADD start.sh .
-
-RUN tar -xvf typecho.tar.gz && \
-    rm typecho.tar.gz && \
+RUN mv nginx.conf /etc/nginx/conf.d && \
+    tar -xvf 1.0.14.10.10.-release.tar.gz && \
+    rm 1.0.14.10.10.-release.tar.gz && \
     mv build/* ./
 
 EXPOSE 80
 
-CMD ["sh", "start.sh"]
+CMD ["sh", "-c", "./start.sh"]
