@@ -2,8 +2,8 @@ FROM php:7.1.7-fpm
 
 # install extensions and typecho
 RUN apt-get update && \
-    apt-get install libcurl4-openssl-dev sqlite3 libsqlite3-dev && \
-    docker-php-ext-install pdo_mysql
+    apt-get install libcurl4-openssl-dev sqlite3 libsqlite3-dev libpq-dev -y && \
+    docker-php-ext-install pdo_mysql pdo_pgsql
 
 WORKDIR /var/www/html/
 
