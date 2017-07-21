@@ -1,0 +1,31 @@
+version: '2'
+volumes:
+  www-volume:
+    driver: local
+services:
+  php-fpm:
+    build: .
+    image: php-fpm
+    env_file:
+    - docker-config.env
+    depends_on:
+    - mysql
+    volumes:
+    - www-volume:/var/www/html/
+  mysql:
+    image: mysql:8.0.0
+    env_file:
+    - docker-config.env
+    command: 
+    - --character-set-server=utf8mb4 
+    - --collation-server=utf8mb4_unicode_ci
+    - --explicit_defaults_for_timestamp=1
+  nginx:
+    image: nginx:1.13.3-alpine
+    command: nginx -g 'daemon off;' -c /var/www/html/docker-nginx.conf
+    depends_on:
+    - php-fpm
+    ports:
+    - "80:80"
+    volumes_from:
+    - php-fpm
