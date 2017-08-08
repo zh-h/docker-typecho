@@ -14,6 +14,7 @@ WORKDIR /var/www/html/
 
 ADD ./1.0.14.10.10.-release.tar.gz /var/www/html/
 ADD ./docker-nginx.conf /var/www/html/
+ADD ./utils/ /var/www/html/utils/
 
 RUN cp -r build/* ./ && \
     rm -rf build/ && \

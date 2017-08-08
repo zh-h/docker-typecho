@@ -23,3 +23,13 @@ open [localhost:8080](http://localhost:8080)
 
 
 orther settings look up `docker-config.env`
+
+## Typecho 迁移到 Hexo
+
+1. 将原来的数据通过数据转储（如:mysql_dump)复制到本地的数据库；
+
+2. 配置 Typecho 使之可以访问备份的数据；
+
+3. 访问`your-host/utils/2hexo.php`;
+
+4. `data/hexo`生成数据。
