@@ -33,8 +33,11 @@ $all_post_sql = "SELECT a.cid, a.title, a.slug, a.text, a.created, a.status,
     FROM typecho_contents AS a
     LEFT JOIN typecho_relationships AS b ON b.cid=a.cid
     LEFT JOIN typecho_metas AS c ON c.mid=b.mid
+    WHERE a.type != 'attachment'
     GROUP BY a.cid
     ORDER BY a.cid DESC";
+
+$begin = microtime(TRUE);
 
 create_folder(SOURCE_DIR);
 
@@ -48,9 +51,13 @@ $query = $db->query($all_post_sql);
 
 $rows = $db->fetchAll($query);
 
+$count = 0;
 foreach($rows as $row){
     generate($row);
+    $count ++;
 }
+$diff = microtime(TRUE) - $begin;
+echo "Generate " . $count . " posts done, using " . $diff . " ms";
 
 function create_folder($dir){
     if(! file_exists($dir)){
