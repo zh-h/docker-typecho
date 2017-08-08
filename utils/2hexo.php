@@ -4,8 +4,8 @@
  *
  */
 
-if (!defined('__TYPECHO_ROOT_DIR__') && !@include_once '../config.inc.php') {
-    file_exists('../install.php') ? header('Location: install.php') : print('Missing Config File');
+if (!defined("__TYPECHO_ROOT_DIR__") && !@include_once "../config.inc.php") {
+    file_exists("../install.php") ? header("Location: install.php") : print("Missing Config File");
     exit;
 }
 
@@ -15,7 +15,9 @@ title: {{ title }}
 date: {{ date }}
 tags: {{ tags }}
 categories: {{ categories }}
----");
+---
+
+");
 
 define("SOURCE_DIR", dirname(dirname(__FILE__)) . "/data/hexo/");
 define("DRAFT_DIR", SOURCE_DIR . "_drafts/");
@@ -62,17 +64,18 @@ function generate($data)
 
     $tpl = TPL;
 
-    $filename = $data['slug'] . '.md';
-    if ($data['status'] == 'publish') {
+    $filename = $data["slug"] . ".md";
+    if ($data["status"] == "publish") {
         $foler = POST_DIR;
     }
 
-    $tpl = str_replace('{{ title }}', $data['title'], $tpl);
-    $tpl = str_replace('{{ date }}', date('Y-m-d H:i:s', $data['created']), $tpl);
-    $tpl = str_replace('{{ tags }}', $data['tags'] ? '[' . $data['tags'] . ']' : '', $tpl);
-    $tpl = str_replace('{{ categories }}', $data['categories'] ? '[' . $data['categories'] . ']' : '', $tpl);
+    $tpl = str_replace("{{ title }}", $data["title"], $tpl);
+    $tpl = str_replace("{{ date }}", date("Y-m-d H:i:s", $data["created"]), $tpl);
+    $tpl = str_replace("{{ tags }}", $data["tags"] ? "[" . $data["tags"] . "]" : "", $tpl);
+    $tpl = str_replace("{{ categories }}", $data["categories"] ? "[" . $data["categories"] . "]" : "", $tpl);
 
-    $tpl .= $data['text'];
+    $tpl .= $data["text"];
+    $tpl = str_replace("<!--markdown-->", "", $tpl);
     file_put_contents($foler . $filename, $tpl);
     $data["filename"] = $filename;
     display_row($data);
