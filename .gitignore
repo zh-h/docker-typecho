@@ -1,3 +1,4 @@
 /data/**
 /usr/**
 config.inc.php
+/html/**
