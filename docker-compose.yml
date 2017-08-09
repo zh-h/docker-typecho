@@ -1,7 +1,4 @@
 version: '2'
-volumes:
-  www-volume:
-    driver: local
 services:
   php-fpm:
     build: .
@@ -9,12 +6,11 @@ services:
     env_file:
     - docker-config.env
     volumes:
-    - www-volume:/var/www/html/
-    - ./data:/var/www/html/data
-    # - ./utils:/var/www/html/utils
+    - ./html/:/var/www/html/
   nginx:
     image: nginx:1.13.3-alpine
     command: nginx -g 'daemon off;' -c /var/www/html/docker-nginx.conf
+    restart: always
     depends_on:
     - php-fpm
     ports:

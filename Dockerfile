@@ -10,12 +10,10 @@ RUN apt-get update && \
     apt-get install libcurl4-openssl-dev sqlite3 libsqlite3-dev libpq-dev -y && \
     docker-php-ext-install pdo_mysql pdo_pgsql
 
-WORKDIR /var/www/html/
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN sed -i 's/\r//g' /docker-entrypoint.sh
 
-ADD ./1.0.14.10.10.-release.tar.gz /var/www/html/
-ADD ./docker-nginx.conf /var/www/html/
-ADD ./utils/ /var/www/html/utils/
+VOLUME /var/www/html/
 
-RUN cp -r build/* ./ && \
-    rm -rf build/ && \
-    chown -R www-data:www-data ./
+ENTRYPOINT ["sh", "/docker-entrypoint.sh"]
+
