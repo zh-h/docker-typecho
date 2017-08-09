@@ -10,10 +10,12 @@ RUN apt-get update && \
     apt-get install libcurl4-openssl-dev sqlite3 libsqlite3-dev libpq-dev -y && \
     docker-php-ext-install pdo_mysql pdo_pgsql
 
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN sed -i 's/\r//g' /docker-entrypoint.sh
+ADD src /var/www/src
+RUN sed -i 's/\r//g' /var/www/src/docker-entrypoint.sh
 
 VOLUME /var/www/html/
+VOLUME /var/www/src/
 
-ENTRYPOINT ["sh", "/docker-entrypoint.sh"]
+ENTRYPOINT ["sh", "/var/www/src/docker-entrypoint.sh"]
+# ENTRYPOINT ls /var/www/src
 
