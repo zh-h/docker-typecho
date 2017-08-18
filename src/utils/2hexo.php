@@ -19,7 +19,8 @@ categories: {{ categories }}
 
 ");
 
-define("SOURCE_DIR", dirname(dirname(__FILE__)) . "/data/hexo/");
+define("DATA_DIR", dirname(dirname(__FILE__)) . "/data/");
+define("HEXO_DIR", DATA_DIR . "hexo/");
 define("DRAFT_DIR", SOURCE_DIR . "_drafts/");
 define("POST_DIR", SOURCE_DIR . "_posts/");
 
@@ -39,7 +40,9 @@ $all_post_sql = "SELECT a.cid, a.title, a.slug, a.text, a.created, a.status,
 
 $begin = microtime(TRUE);
 
-create_folder(SOURCE_DIR);
+create_folder(DATA_DIR);
+
+create_folder(HEXO_DIR);
 
 create_folder(DRAFT_DIR);
 
@@ -57,7 +60,7 @@ foreach($rows as $row){
     $count ++;
 }
 $diff = microtime(TRUE) - $begin;
-echo "Generate " . $count . " posts done, using " . $diff . " ms";
+echo "Generate " . $count . " posts done, using " . round($diff, 5) . " s";
 
 function create_folder($dir){
     if(! file_exists($dir)){

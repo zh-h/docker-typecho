@@ -21,6 +21,7 @@ docker-compose up
 ## Install
 open [localhost:8080](http://localhost:8080)
 
+base authentication username and password: admin adminadmin
 
 orther settings look up `docker-config.env`
 
@@ -28,8 +29,8 @@ orther settings look up `docker-config.env`
 
 1. 将原来的数据通过数据转储（如:mysql_dump)复制到本地的数据库；
 
-2. 配置 Typecho 使之可以访问备份的数据；
+2. 配置 Typecho 使之可以访问备份的数据(访问主机数据库请使用网关IP，如192.168.99.1)；
 
 3. 访问`your-host/utils/2hexo.php`;
 
-4. `data/hexo`生成数据。
+4. `html/data/hexo`目录下生成数据。
