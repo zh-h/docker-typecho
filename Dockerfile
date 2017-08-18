@@ -5,16 +5,15 @@ ADD ./sources.list /tmp
 # using 163 souces
 RUN cat /tmp/sources.list > /etc/apt/sources.list
 
-ENV BASE_AUTH=admin:adminadmin
+ENV AUTH_USER=admin
+ENV AUTH_PASSWORD=adminadmin
 
 
 # install extensions and typecho
 RUN apt-get update && \
     apt-get install libcurl4-openssl-dev sqlite3 libsqlite3-dev libpq-dev -y && \
     docker-php-ext-install pdo_mysql pdo_pgsql && \
-    apt-get install apache2-utils -y && \
-    mkdir -p /etc/nginx && \
-    echo $BASE_AUTH > /etc/nginx/.htpasswd
+    apt-get install apache2-utils -y
 
 
 ADD src /var/www/src
